@@ -1,0 +1,77 @@
+
+
+
+
+
+Math review
+https://youtu.be/k5wtuKWmV48?si=Aw4qDPboc84N4cCZ
+
+
+
+Collision Detection and Response Algorithm for Boxes and Spheres
+Overview:
+This algorithm outlines a general approach to detect and resolve collisions between axis-aligned bounding boxes (AABBs) and spheres in a 3D environment. It involves two primary steps:
+Intersection Test: Determines if the two shapes overlap.
+Collision Response: Calculates the necessary adjustments to separate the objects and handle physical interactions.
+Intersection Test:
+Sphere-Sphere:
+Calculate the distance between the centers of the two spheres.
+If the distance is less than the sum of their radii, a collision has occurred.
+Sphere-AABB:
+Find the closest point on the AABB to the sphere's center.
+Calculate the distance between the sphere's center and this closest point.
+If the distance is less than the sphere's radius, a collision has occurred.
+Collision Response:
+Calculate Minimum Translation Distance (MTD):
+Determine the vector that, when added to one object's position, will move it just enough to separate the two objects.
+This can be calculated using the intersection depth and the collision normal.
+Apply MTD:
+Move one or both objects along the MTD vector to separate them.
+The amount of movement can be adjusted based on factors like object mass and material properties.
+Handle Physical Interactions:
+Apply forces, impulses, or other physical effects to simulate realistic behavior.
+This can include bouncing, friction, and deformation.
+Implementation Considerations:
+Broad-Phase Collision Detection: Use spatial partitioning techniques like bounding volume hierarchies (BVHs) to quickly identify potential collision pairs.
+Narrow-Phase Collision Detection: Perform precise intersection tests on the pairs identified in the broad phase.
+Continuous Collision Detection (CCD): For fast-moving objects, use CCD to prevent objects from tunneling through each other.
+Physics Engine: Consider using a physics engine to handle complex collision scenarios and physical simulations.
+Pseudocode:
+function checkCollision(sphere, box) {
+    // Sphere-Sphere
+    if (sphere.type == "sphere" && box.type == "sphere") {
+        distance = distanceBetweenCenters(sphere, box)
+        if (distance < sphere.radius + box.radius) {
+            return true
+        }
+    }
+
+    // Sphere-AABB
+    if (sphere.type == "sphere" && box.type == "box") {
+        closestPoint = closestPointOnBox(sphere.center, box)
+        distance = distanceBetweenPoints(sphere.center, closestPoint)
+        if (distance < sphere.radius) {
+            return true
+        }
+    }
+
+    return false
+}
+
+function resolveCollision(object1, object2, mtd) {
+    // Apply MTD to one or both objects
+    object1.position += mtd * object1.mass / (object1.mass + object2.mass)
+    object2.position -= mtd * object2.mass / (object1.mass + object2.mass)
+
+    // Handle physical interactions (e.g., bounce, friction)
+    // ...
+}
+
+Additional Notes:
+This is a basic outline, and specific implementations may vary depending on the complexity of the game and the desired level of realism.
+Consider using optimization techniques to improve performance, especially for large numbers of objects.
+Experiment with different collision response methods to achieve the desired gameplay feel.
+By following these principles and incorporating the appropriate algorithms, you can create realistic and engaging collision interactions in your video games.
+
+
+
